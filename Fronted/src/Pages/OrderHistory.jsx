@@ -6,10 +6,12 @@ import { Steps } from 'antd';
 const OrderHistory = () => {
   const [groupedOrders, setGroupedOrders] = useState([]);
 
+  let url="https://pharmacy-project-main.onrender.com"
+
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/orderdata");
+        const res = await axios.get(`${url}/orderdata`);
 
         let groups = {};
 
