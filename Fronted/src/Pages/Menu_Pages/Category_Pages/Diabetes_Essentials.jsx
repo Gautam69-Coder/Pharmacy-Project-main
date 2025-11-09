@@ -10,7 +10,7 @@ const Diabetes_Essential = () => {
   const [addedItems, setAddedItems] = useState({});
   const [messageApi, contextHolder] = message.useMessage();
 
-  const url="http://localhost:3000"
+  const url = "https://pharmacy-project-main.onrender.com"
 
   // Fetch products & check cart for already added items
   useEffect(() => {

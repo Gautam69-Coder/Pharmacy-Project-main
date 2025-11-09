@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Logo from "../assets/logo/logo.png"
 import { FaPills, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate, Link, } from 'react-router-dom';
@@ -18,11 +18,11 @@ const ForgetPassword = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
 
     useEffect(() => {
-      setEmail(localStorage.getItem('email'))
+        setEmail(localStorage.getItem('email'))
     }, [])
 
-    const url="http://localhost:3000"
-    
+    const url = "https://pharmacy-project-main.onrender.com"
+
 
     const handleSubmit = async () => {
         await axios.post(`${url}/forget-password`, {

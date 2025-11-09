@@ -19,7 +19,7 @@ const Success = () => {
     return () => clearTimeout(timer);
   }, []);
 
- const url="http://localhost:3000"
+  const url = "https://pharmacy-project-main.onrender.com"
   useEffect(() => {
     axios
       .get(`${url}/prodata`)

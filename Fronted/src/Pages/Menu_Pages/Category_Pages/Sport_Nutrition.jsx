@@ -9,7 +9,7 @@ const Sport = () => {
   const [products, setProducts] = useState([]);
   const [addedItems, setAddedItems] = useState({});
   const [messageApi, contextHolder] = message.useMessage();
-  const url="http://localhost:3000"
+  const url = "https://pharmacy-project-main.onrender.com"
 
   // Fetch products and check cart
   useEffect(() => {

@@ -92,7 +92,7 @@ function Trending() {
 
 
 
-const url="http://localhost:3000"
+  const url = "http://localhost:3000"
 
 
   //Item Added Button show if already item in cart
@@ -376,7 +376,7 @@ export default function ProductDetails() {
     totalRatings
   ).toFixed(1);
 
-  const url="http://localhost:3000"
+  const url = "https://pharmacy-project-main.onrender.com"
 
   // Fetch Product
   useEffect(() => {
@@ -455,7 +455,7 @@ export default function ProductDetails() {
 
   return (
     <div>
-<Navbar/>
+      <Navbar />
 
 
       <div className="min-h-screen p-6 mt-10">

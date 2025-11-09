@@ -1,5 +1,5 @@
 const mongoose=require('mongoose');
 
-const connection=mongoose.connect("mongodb://localhost:27017/PharmacyUser");
+const connection=mongoose.connect("mongodb+srv://gautamdoliya69:gautamdoliya69@pharmacycluter.wxsmngq.mongodb.net/Pharmacy");
 
 module.exports=connection

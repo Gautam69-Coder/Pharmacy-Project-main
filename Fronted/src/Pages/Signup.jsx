@@ -17,8 +17,8 @@ const SignUpPage = () => {
   const [error, setError] = useState("");
   const [messageApi, contextHolder] = message.useMessage();
 
-  const url="http://localhost:3000"
-  
+  const url = "https://pharmacy-project-main.onrender.com"
+
   const validateEmail = (email) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };

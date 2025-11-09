@@ -27,7 +27,7 @@ const Doctors = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const url="http://localhost:3000"
+    const url = "https://pharmacy-project-main.onrender.com"
 
     // Fetch booked appointments from API
     useEffect(() => {
@@ -36,10 +36,10 @@ const Doctors = () => {
                 setLoading(true);
                 const response = await axios.get(`${url}/booked_doctors`);
                 console.log("API Response:", response.data);
-                
+
                 // Handle the response - if it's an array, use it directly, if it's an object with data property, use response.data.data
                 const appointmentsData = Array.isArray(response.data) ? response.data : response.data.data || [];
-                
+
                 // Transform the data to match expected structure and add missing fields
                 const transformedData = appointmentsData.map((appointment, index) => ({
                     id: appointment._id || appointment.id || `appointment-${index}`,
@@ -82,7 +82,7 @@ const Doctors = () => {
     // Filter appointments based on status and search term
     const filteredAppointments = bookedAppointments.filter(appointment => {
         const matchesFilter = selectedFilter === "all" || appointment.status === selectedFilter;
-        const matchesSearch = 
+        const matchesSearch =
             appointment.doctor?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             appointment.doctor?.specialization?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             appointment.appointmentId?.toLowerCase().includes(searchTerm.toLowerCase());
@@ -148,8 +148,8 @@ const Doctors = () => {
                 <div className="text-center">
                     <XCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
                     <p className="text-red-600 mb-4">{error}</p>
-                    <button 
-                        onClick={() => window.location.reload()} 
+                    <button
+                        onClick={() => window.location.reload()}
                         className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                     >
                         Retry
@@ -256,11 +256,10 @@ const Doctors = () => {
                                 <button
                                     key={filter}
                                     onClick={() => setSelectedFilter(filter)}
-                                    className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                                        selectedFilter === filter
+                                    className={`px-4 py-2 rounded-lg font-medium transition-colors ${selectedFilter === filter
                                             ? "bg-blue-600 text-white"
                                             : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                                    }`}
+                                        }`}
                                 >
                                     {filter.charAt(0).toUpperCase() + filter.slice(1)}
                                 </button>
@@ -269,7 +268,7 @@ const Doctors = () => {
                     </div>
                 </div>
 
-                
+
 
                 {/* Appointments List */}
                 <div className="space-y-4">

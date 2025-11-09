@@ -77,7 +77,7 @@ const Cart = () => {
     }
   };
 
-  const url="http://localhost:3000"
+  const url = "https://pharmacy-project-main.onrender.com"
 
   // Fetch cart products
   useEffect(() => {
@@ -100,27 +100,29 @@ const Cart = () => {
   }, []);
 
   // Quantity Change
-  const handleQuantityChange = async(index, value,id) => {
+  const handleQuantityChange = async (index, value, id) => {
     setProdata((prev) =>
       prev.map((item, idx) =>
         idx === index ? { ...item, quantity: parseInt(value) } : item,
       )
     );
 
-    
 
-    await axios.get(`${url}/qty`,{params:{
-      qty:value,
-      index:index
-    }})  
-        .then((res)=>{
-          console.log(res.data)
-        })
-        .catch((err)=>{
-          console.log(err.data)
-        })
-      };
-      
+
+    await axios.get(`${url}/qty`, {
+      params: {
+        qty: value,
+        index: index
+      }
+    })
+      .then((res) => {
+        console.log(res.data)
+      })
+      .catch((err) => {
+        console.log(err.data)
+      })
+  };
+
 
   // Remove item
   const removeItem = (index) => {
@@ -138,7 +140,7 @@ const Cart = () => {
   const handleAddAddress = () => {
     navigate('/cart/address/')
     console.log(couponDiscount)
-    localStorage.setItem('Coupon',couponDiscount)
+    localStorage.setItem('Coupon', couponDiscount)
   }
 
   // Totals
@@ -231,7 +233,7 @@ const Cart = () => {
                       <select
                         value={product.quantity}
                         onChange={(e) => {
-                          handleQuantityChange(index, e.target.value,prodata.id)
+                          handleQuantityChange(index, e.target.value, prodata.id)
                         }
                         }
                         className="border border-blue-600 rounded-md px-2 py-1 text-blue-700 font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -296,7 +298,7 @@ const Cart = () => {
                   <span>MRP</span>
                   <span>₹{totalMRP.toFixed(2)}</span>
                 </div>
-                
+
                 {appliedCoupon && (
                   <div className="flex justify-between text-green-600 text-sm font-semibold mb-2">
                     <span>Coupon Discount ({appliedCoupon.code})</span>

@@ -23,7 +23,7 @@ const ContactUs = () => {
     message: ''
   });
 
-  const url="http://localhost:3000"
+ const url = "https://pharmacy-project-main.onrender.com"
 
   const [api, contextHolder] = notification.useNotification();
 

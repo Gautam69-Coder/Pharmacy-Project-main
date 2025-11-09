@@ -10,7 +10,7 @@ const Ayurvedic = () => {
   const [must_have, setMust_Have] = useState([]);
   const [addedItems, setAddedItems] = useState({});
   const [messageApi, contextHolder] = message.useMessage();
-  const url="http://localhost:3000"
+  const url = "https://pharmacy-project-main.onrender.com"
 
   useEffect(() => {
     const fetchData = async () => {

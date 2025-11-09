@@ -23,7 +23,7 @@ function Trending() {
   const [addedItems, setAddedItems] = useState({});
   const [messageApi, contextHolder] = message.useMessage();
 
-  const url="http://localhost:3000"
+  const url = "https://pharmacy-project-main.onrender.com"
 
   //Item Added Button show if already item in cart
   useEffect(() => {

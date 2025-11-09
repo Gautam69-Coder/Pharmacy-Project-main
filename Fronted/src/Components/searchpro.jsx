@@ -12,7 +12,7 @@ const Searchpro = () => {
 
   const [data, setData] = useState([]);
 
-  const url="http://localhost:3000"
+  const url = "https://pharmacy-project-main.onrender.com"
 
   useEffect(() => {
     const fetchData = async () => {

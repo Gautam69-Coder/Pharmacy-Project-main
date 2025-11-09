@@ -35,7 +35,7 @@ const AddressPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const url="http://localhost:3000"
+  const url = "https://pharmacy-project-main.onrender.com"
 
   // Go to next step only if form valid
   const handleNext = () => {

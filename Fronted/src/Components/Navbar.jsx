@@ -52,7 +52,7 @@ const Navbar = () => {
       ),
       onClick: () => navigate('/Home/Order'),
     },
-    
+
     {
       key: '1',
       label: (
@@ -81,7 +81,7 @@ const Navbar = () => {
     },
   ];
 
-  const url="http://localhost:3000"
+  const url = "https://pharmacy-project-main.onrender.com"
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 30);
@@ -155,7 +155,7 @@ const Navbar = () => {
 
           {/* Location & Language */}
           <div className="flex gap-1 sm:gap-2 items-center order-3 sm:order-none w-full sm:w-auto justify-between sm:justify-start">
-            
+
             <button
               onClick={() => {
                 navigate('/Home/ContactUs/')

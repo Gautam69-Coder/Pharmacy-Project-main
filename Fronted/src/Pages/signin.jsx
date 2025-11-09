@@ -25,7 +25,7 @@ const SignInPage = () => {
       return; // Prevents further execution
     }
 
-    const url="http://localhost:3000"
+    const url = "https://pharmacy-project-main.onrender.com"
     axios.post(`${url}/signin`, { email, password })
       .then(result => {
         if (result.data === 'Login Successful' || result.data.message === 'Login Successful') {
@@ -166,7 +166,7 @@ const SignInPage = () => {
               <button type="submit" className="signin-button">
                 Sign In
               </button>
-              
+
             </form>
 
             <div className="signin-footer">

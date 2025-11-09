@@ -9,7 +9,7 @@ const Vitamin = () => {
   const [products, setProducts] = useState([]);
   const [addedItems, setAddedItems] = useState({});
   const [messageApi, contextHolder] = message.useMessage();
-  const url="http://localhost:3000"
+  const url = "https://pharmacy-project-main.onrender.com"
 
   // Fetch vitamin products + check cart for already added items
   useEffect(() => {
@@ -22,7 +22,7 @@ const Vitamin = () => {
         if (!username) return;
 
         const cartRes = await axios.get(
-         `${url}/cart?username=${username}`
+          `${url}/cart?username=${username}`
         );
 
         const addedMap = {};
