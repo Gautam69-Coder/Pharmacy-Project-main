@@ -1,0 +1,22 @@
+.g-shadow-k {
+    transition: box-shadow 0.3s ease-in-out;
+    transform: scale(1);
+}
+
+.g-shadow-k:hover {
+    box-shadow: 0px 0px 2px 2px #4bc1b7;
+    border: none;
+    transform: scale(1.05);
+}
+
+.g-shadow-k-c {
+    transition: box-shadow 0.3s ease-in-out;
+    transform: scale(1);
+    color: white;
+}
+
+.g-shadow-k-c:hover {
+    box-shadow: 0px 0px 2px 2px #4bc1b7;
+    border: none;
+    transform: scale(1.05);
+}
