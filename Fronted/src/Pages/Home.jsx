@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Logo2 from '../assets/logo/logo2.png';
-import Trending from '../Components/Trending.jsx';
+import Trending from '../Components/trending.jsx';
 import Prescription from '../Components/Prescrition.jsx';
 import New_Lunches from '../Components/New_Lunches.jsx';
 import './css/home.css';
