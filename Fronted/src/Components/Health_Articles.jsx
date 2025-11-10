@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// Modal Component with minimal smooth animations
+// Modal Component with responsive design
 const ArticleModal = ({ isOpen, onClose, article }) => {
   if (!isOpen || !article) return null;
 
@@ -9,7 +9,7 @@ const ArticleModal = ({ isOpen, onClose, article }) => {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 bg-white/30 backdrop-blur-md flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-white/30 backdrop-blur-md flex items-center justify-center z-50 p-3 sm:p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -17,20 +17,22 @@ const ArticleModal = ({ isOpen, onClose, article }) => {
           onClick={onClose}
         >
           <motion.div
-            className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden"
+            className="bg-white rounded-xl sm:rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden"
             initial={{ scale: 0.8, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.8, opacity: 0, y: 20 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header */}
-            <div className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white p-6">
+            {/* Header - Responsive */}
+            <div className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white p-4 sm:p-6">
               <div className="flex justify-between items-start">
-                <h2 className="text-2xl font-bold">{article.title}</h2>
+                <h2 className="text-lg sm:text-xl md:text-2xl font-bold pr-2">
+                  {article.title}
+                </h2>
                 <motion.button
                   onClick={onClose}
-                  className="text-white hover:text-gray-200 text-2xl font-bold"
+                  className="text-white hover:text-gray-200 text-2xl sm:text-3xl font-bold flex-shrink-0"
                   aria-label="Close modal"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
@@ -41,46 +43,58 @@ const ArticleModal = ({ isOpen, onClose, article }) => {
               </div>
             </div>
 
-            {/* Content */}
-            <div className="p-6 overflow-y-auto max-h-[60vh]">
-              <div className="flex justify-center mb-6">
+            {/* Content - Responsive */}
+            <div className="p-4 sm:p-6 overflow-y-auto max-h-[50vh] sm:max-h-[60vh]">
+              <div className="flex justify-center mb-4 sm:mb-6">
                 <img
                   src={article.image}
                   alt={article.title}
-                  className="w-24 h-24 object-contain"
+                  className="w-20 h-20 sm:w-24 sm:h-24 object-contain"
                 />
               </div>
               
-              <div className="space-y-4">
-                <p className="text-gray-700 leading-relaxed">
+              <div className="space-y-3 sm:space-y-4">
+                <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
                   {article.description}
                 </p>
                 
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-gray-800 mb-2">Key Points:</h4>
-                  <ul className="space-y-2">
+                <div className="bg-blue-50 p-3 sm:p-4 rounded-lg">
+                  <h4 className="font-semibold text-sm sm:text-base text-gray-800 mb-2">
+                    Key Points:
+                  </h4>
+                  <ul className="space-y-1.5 sm:space-y-2">
                     <li className="flex items-start">
                       <span className="text-blue-500 mr-2">•</span>
-                      <span className="text-gray-700">Understanding the importance of mental health in daily life</span>
+                      <span className="text-xs sm:text-sm text-gray-700">
+                        Understanding the importance of mental health in daily life
+                      </span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-blue-500 mr-2">•</span>
-                      <span className="text-gray-700">Recognizing signs and symptoms of mental health issues</span>
+                      <span className="text-xs sm:text-sm text-gray-700">
+                        Recognizing signs and symptoms of mental health issues
+                      </span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-blue-500 mr-2">•</span>
-                      <span className="text-gray-700">Available resources and support systems</span>
+                      <span className="text-xs sm:text-sm text-gray-700">
+                        Available resources and support systems
+                      </span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-blue-500 mr-2">•</span>
-                      <span className="text-gray-700">How to access professional help and counseling services</span>
+                      <span className="text-xs sm:text-sm text-gray-700">
+                        How to access professional help and counseling services
+                      </span>
                     </li>
                   </ul>
                 </div>
 
-                <div className="bg-green-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-gray-800 mb-2">Benefits of Mental Health Awareness:</h4>
-                  <p className="text-gray-700 text-sm leading-relaxed">
+                <div className="bg-green-50 p-3 sm:p-4 rounded-lg">
+                  <h4 className="font-semibold text-sm sm:text-base text-gray-800 mb-2">
+                    Benefits of Mental Health Awareness:
+                  </h4>
+                  <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
                     Promoting mental health awareness helps create supportive communities, reduces stigma, 
                     and encourages individuals to seek help when needed. It also improves overall quality 
                     of life and helps people develop better coping strategies for stress and challenges.
@@ -89,15 +103,15 @@ const ArticleModal = ({ isOpen, onClose, article }) => {
               </div>
             </div>
 
-            {/* Footer */}
-            <div className="bg-gray-50 px-6 py-4 border-t">
-              <div className="flex justify-between items-center">
-                <p className="text-sm text-gray-600">
+            {/* Footer - Responsive */}
+            <div className="bg-gray-50 px-4 sm:px-6 py-3 sm:py-4 border-t">
+              <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0">
+                <p className="text-xs sm:text-sm text-gray-600 text-center sm:text-left">
                   Consult with healthcare professionals for personalized advice
                 </p>
                 <motion.button
                   onClick={onClose}
-                  className="bg-[#1B69DE] hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors"
+                  className="bg-[#1B69DE] hover:bg-blue-700 text-white px-4 sm:px-6 py-2 rounded-lg transition-colors text-sm sm:text-base w-full sm:w-auto"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ duration: 0.2 }}
@@ -156,7 +170,6 @@ function Health_Articles() {
       description: "Importance of quality sleep and practical tips for improving sleep patterns and habits.",
       image: "https://imgs.search.brave.com/g2pwqOlT_pniDN4EMKvfbBNlgVhDTAGVSNUpp33I-7Y/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/bm9zbGVlcGxlc3Nu/aWdodHMuY29tL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDEyLzA1/L3NsZWVwLWh5Z2ll/bmUuanBn"
     },
-    
   ];
 
   const scroll = (direction) => {
@@ -182,62 +195,63 @@ function Health_Articles() {
   };
 
   return (
-    <div style={{ width: '99vw' }}>
-      {/* Heading */}
-      <h1 className='text-2xl mx-14 mt-5 font-bold p-0 m-0'>HealthCare Tips</h1>
-      <div className='flex justify-center'>
-        <div className="relative w-[96%]">
-
-          {/* Left Scroll Button */}
+    <div className="w-full px-2 sm:px-4">
+      {/* Heading - Responsive */}
+      <h1 className="text-xl sm:text-2xl md:text-3xl mx-4 sm:mx-8 md:mx-14 mt-3 sm:mt-4 md:mt-5 font-bold">
+        HealthCare Tips
+      </h1>
+      
+      <div className="flex justify-center">
+        <div className="relative w-full max-w-[1400px]">
+          {/* Left Scroll Button - Hidden on mobile */}
           <button
             onClick={() => scroll('left')}
             aria-label="Scroll Left"
-            className="absolute -left-6 top-1/2 z-30 -translate-y-1/2 bg-white shadow-md w-12 h-12 rounded-full text-gray-600 flex items-center justify-center transition-transform duration-300 hover:scale-110 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="hidden md:flex absolute -left-4 lg:-left-6 top-1/2 z-30 -translate-y-1/2 bg-white shadow-lg w-10 h-10 lg:w-12 lg:h-12 rounded-full text-gray-600 items-center justify-center transition-transform duration-300 hover:scale-110 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="15 18 9 12 15 6" />
             </svg>
           </button>
 
-          {/* Always-visible left edge blur */}
-          <div
-            className="pointer-events-none absolute left-0 top-0 h-full w-10 z-20 "
-            style={{
-              background: '  ',
-            }}
-          />
-
-          {/* Scrollable card container */}
+          {/* Scrollable card container - Responsive */}
           <div
             ref={scrollRef}
-            className="flex overflow-x-auto scroll-smooth gap-6 p-3 no-scrollbar mx-7"
+            className="flex overflow-x-auto scroll-smooth gap-3 sm:gap-4 md:gap-6 p-2 sm:p-3 no-scrollbar"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              WebkitOverflowScrolling: 'touch'
+            }}
           >
-            {articles.map((article, index) => (
+            {articles.map((article) => (
               <div
                 key={article.id}
-                className="min-w-[380px] max-w-[380px] bg-white rounded-2xl shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 cursor-pointer flex flex-col select-none relative"
+                className="min-w-[280px] max-w-[280px] sm:min-w-[320px] sm:max-w-[320px] md:min-w-[380px] md:max-w-[380px] bg-white rounded-xl sm:rounded-2xl shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 cursor-pointer flex flex-col select-none relative"
               >
-                {/* Image */}
-                <div className="relative h-40 flex justify-center items-center p-4 rounded-t-2xl">
+                {/* Image - Responsive */}
+                <div className="relative h-32 sm:h-36 md:h-40 flex justify-center items-center p-3 sm:p-4 rounded-t-xl sm:rounded-t-2xl">
                   <img
                     src={article.image}
                     alt={article.title}
-                    className=" h-42 object-contain"
+                    className="h-32 sm:h-36 md:h-40 object-contain"
                   />
                 </div>
 
-                <hr className="my-2 border-gray-200" />
+                <hr className="my-1.5 sm:my-2 border-gray-200" />
                 
-                {/* Content */}
-                <div className="flex flex-col flex-grow p-4 justify-center">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2 leading-snug">
+                {/* Content - Responsive */}
+                <div className="flex flex-col flex-grow p-3 sm:p-4 justify-center">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2 leading-snug">
                     {article.title}
                   </h3>
-                  <p className='mb-2'>{article.description}</p>
-                  <div className='flex justify-center mt-2'>
+                  <p className="mb-2 text-xs sm:text-sm text-gray-600 line-clamp-3">
+                    {article.description}
+                  </p>
+                  <div className="flex justify-center mt-2">
                     <motion.button 
                       onClick={() => openModal(article)}
-                      className='border bg-[#e7f6ff] border-[#1B69DE] w-30 rounded-4xl p-2 text-[#1B69DE] hover:bg-[#1B69DE] hover:text-white hover:transition-all'
+                      className="border bg-[#e7f6ff] border-[#1B69DE] px-4 py-2 rounded-full text-xs sm:text-sm text-[#1B69DE] hover:bg-[#1B69DE] hover:text-white transition-all"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       transition={{ duration: 0.2 }}
@@ -250,21 +264,13 @@ function Health_Articles() {
             ))}
           </div>
 
-          {/* Always-visible right edge blur */}
-          <div
-            className="pointer-events-none absolute right-0 top-0 h-full w-12 z-20"
-            style={{
-              background: '   '
-            }}
-          />
-
-          {/* Right Scroll Button */}
+          {/* Right Scroll Button - Hidden on mobile */}
           <button
             onClick={() => scroll('right')}
             aria-label="Scroll Right"
-            className="absolute -right-6 top-1/2 z-30 -translate-y-1/2 bg-white shadow-md w-12 h-12 rounded-full text-gray-600 flex items-center justify-center transition-transform duration-300 hover:scale-110 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="hidden md:flex absolute -right-4 lg:-right-6 top-1/2 z-30 -translate-y-1/2 bg-white shadow-lg w-10 h-10 lg:w-12 lg:h-12 rounded-full text-gray-600 items-center justify-center transition-transform duration-300 hover:scale-110 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="9 18 15 12 9 6" />
             </svg>
           </button>

@@ -1,37 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'
-import { DownOutlined } from '@ant-design/icons';
-import { Dropdown, Space } from 'antd';
+import axios from 'axios';
+import { Dropdown } from 'antd';
+import { Menu, X } from 'lucide-react';
 
 import searchIcon from '../assets/icons/search.svg';
 import personIcon from '../assets/icons/person.png';
-import offerIcon from '../assets/icons/offer.png';
 import cartIcon from '../assets/icons/cart.png';
 import logo from '../assets/logo/logo.png';
 import Menubar from './Menubar';
-import { Button } from 'antd';
-
-
 
 // Helper: get initials from user name
 const getInitials = (name) => {
   if (!name) return '';
   const parts = name.trim().split(' ').filter(Boolean);
   if (parts.length === 1) return parts[0][0].toUpperCase();
-  return (parts + parts[parts.length - 1]).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 };
-
-const items = [
-  {
-    key: '1',
-    label: (
-      <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-        1st menu item
-      </a>
-    ),
-  }
-];
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -39,36 +24,36 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [userName, setUserName] = useState('');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Dropdown menu items with history button
+  const url = "https://pharmacy-project-main.onrender.com";
+
+  // Dropdown menu items
   const getDropdownItems = () => [
     {
       key: '0',
       label: (
-        <div className="flex items-center gap-2 px-2 py-1 hover:bg-gray-50 rounded-md transition-colors">
+        <div className="flex items-center gap-2 px-2 py-2 hover:bg-gray-50 rounded-md transition-colors">
           <span className="text-gray-700">📋</span>
           <span>Order History</span>
         </div>
       ),
       onClick: () => navigate('/Home/Order'),
     },
-
     {
       key: '1',
       label: (
-        <div className="flex items-center gap-2 px-2 py-1  rounded-md transition-colors ">
+        <div className="flex items-center gap-2 px-2 py-2 hover:bg-gray-50 rounded-md transition-colors">
           <span>🧑‍⚕️</span>
           <span>Your Doctors</span>
         </div>
       ),
-      onClick: () => {
-        navigate('/Doctors')
-      },
+      onClick: () => navigate('/Doctors'),
     },
     {
       key: '2',
       label: (
-        <div className="flex items-center gap-2 px-2 py-1 hover:bg-red-50 rounded-md transition-colors text-red-600">
+        <div className="flex items-center gap-2 px-2 py-2 hover:bg-red-50 rounded-md transition-colors text-red-600">
           <span>🚪</span>
           <span>Logout</span>
         </div>
@@ -80,8 +65,6 @@ const Navbar = () => {
       },
     },
   ];
-
-  const url = "https://pharmacy-project-main.onrender.com"
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 30);
@@ -109,19 +92,17 @@ const Navbar = () => {
   ];
 
   const handleSearch = async (searchQuery) => {
-    console.log(searchQuery)
     try {
       const res = await axios.get(`${url}/Home/search`, {
         params: { searchQuery }
       });
-      console.log(res.data);
-      navigate(`/searchpro?search=${searchQuery}`)
+      navigate(`/searchpro?search=${searchQuery}`);
     } catch (err) {
       console.error(err);
     }
   };
 
-  // Avatar color utility for consistency
+  // Avatar color utility
   const avatarColors = [
     'bg-emerald-100 text-emerald-700 ring-emerald-200',
     'bg-blue-100 text-blue-700 ring-blue-200',
@@ -141,197 +122,238 @@ const Navbar = () => {
     <div className="relative">
       {/* Top Navbar */}
       {!isScrolled && (
-        <div className="flex flex-wrap sm:flex-nowrap justify-between items-center px-3 sm:px-4 py-2 h-auto sm:h-16 bg-white/98 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 shadow-sm gap-2 sm:gap-0">
+        <div className="bg-white/98 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 shadow-sm">
+          <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
+            <div className="flex items-center justify-between h-16 sm:h-18 md:h-20 gap-3">
+              
+              {/* Logo */}
+              <div className="flex items-center flex-shrink-0">
+                <img
+                  src={logo}
+                  alt="Logo"
+                  className="h-7 sm:h-8 md:h-10 transition-transform hover:scale-105 cursor-pointer"
+                  onClick={() => navigate('/')}
+                />
+              </div>
 
-          {/* Logo */}
-          <div className="flex items-center flex-shrink-0">
-            <img
-              src={logo}
-              alt="Logo"
-              className="h-6 sm:h-8 transition-transform hover:scale-105 cursor-pointer "
-              onClick={() => navigate('/')}
-            />
-          </div>
-
-          {/* Location & Language */}
-          <div className="flex gap-1 sm:gap-2 items-center order-3 sm:order-none w-full sm:w-auto justify-between sm:justify-start">
-
-            <button
-              onClick={() => {
-                navigate('/Home/ContactUs/')
-              }}
-              className="hidden sm:block bg-white border border-blue-200 hover:border-blue-400 rounded-full px-3 py-1.5 shadow-sm">
-              Contact us
-            </button>
-          </div>
-
-          {/* Search Bar */}
-          <form
-            className="flex-1 min-w-full sm:min-w-[250px] md:max-w-xl mx-0 sm:mx-6 order-2 sm:order-none "
-            style={{ marginRight: '75px' }}
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSearch(searchQuery);
-            }}
-          >
-            <div
-              className={`relative flex items-center h-9 sm:h-10 rounded-xl px-2 sm:px-3  bg-white border shadow-sm transition-all text-sm ${isSearchFocused
-                ? 'border-blue-400 shadow-md ring-2 ring-blue-50 scale-105'
-                : 'border-gray-200 hover:border-gray-300'
-                }`}
-            >
-              <img src={searchIcon} alt="search" className="w-4 h-4 text-gray-400" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search medicines, health products..."
-                className="w-full pl-2 text-xs outline-none bg-transparent placeholder-gray-400"
-                onFocus={() => setIsSearchFocused(true)}
-                onBlur={() => setIsSearchFocused(false)}
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => setSearchQuery('')}
-                  className="text-gray-400 hover:text-gray-600 ml-1 p-1 rounded-full hover:bg-gray-100 transition-colors"
-                  aria-label="Clear search"
-                >
-                  ✕
-                </button>
-              )}
-            </div>
-          </form>
-
-          {/* Right Nav Items */}
-          <div className="flex items-center gap-1">
-            {navItems.map((item, idx) => {
-              const isUser = item.isUser;
-              const firstName = userName ? userName.split(' ')[0] : '';
-              const initials = userName ? getInitials(userName) : null;
-              const avatarStyle = userName ? getAvatarStyle(userName) : '';
-
-              // If user is logged in and this is the user account item, wrap with dropdown
-              if (isUser && userName) {
-                return (
-                  <Dropdown
-                    key={idx}
-                    menu={{
-                      items: getDropdownItems(),
-                      onClick: ({ key }) => {
-                        const clickedItem = getDropdownItems().find(item => item.key === key);
-                        if (clickedItem?.onClick) {
-                          clickedItem.onClick();
-                        }
-                      }
-                    }}
-                    placement="bottomRight"
-                    trigger={['click']}
-                    overlayClassName="min-w-[200px]"
-                  >
-                    <div
-                      className={`group relative cursor-pointer overflow-hidden rounded-xl transition-all duration-200
-                        hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:shadow-md
-                        focus-within:ring-2 focus-within:ring-blue-200 focus-within:ring-opacity-50
-                        ${isUser ? 'px-3 py-2' : 'px-2 py-1.5'}`}
-                      role="button"
-                      tabIndex={0}
-                      aria-label={`Account: ${userName}`}
-                      title={userName}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <div className={`inline-flex items-center justify-center rounded-full ring-1 transition-all duration-200 
-                          w-8 h-8 text-sm font-semibold group-hover:scale-105 group-hover:shadow-sm ${avatarStyle}`}>
-                          {initials}
-                        </div>
-
-                        <div className="flex items-center gap-1.5">
-                          <span
-                            className="font-medium transition-colors duration-200 text-gray-800 group-hover:text-blue-700 text-sm hidden sm:block max-w-[120px] truncate"
-                          >
-                            {`Hi, ${firstName}`}
-                          </span>
-
-                          {/* Smaller dropdown SVG */}
-                          <svg
-                            className="w-3 h-3 text-gray-400 group-hover:text-blue-600 transition-colors duration-200 hidden sm:block"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            aria-hidden="true"
-                          >
-                            <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
-                          </svg>
-                        </div>
-                      </div>
-
-                      {/* Animated Underline */}
-                      <div className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-indigo-500 
-                        group-hover:w-4/5 group-hover:left-[10%] transition-all duration-300 rounded-full"></div>
-                    </div>
-                  </Dropdown>
-                );
-              }
-
-              // For non-user items or when user is not logged in
-              return (
+              {/* Search Bar - Desktop & Tablet */}
+              <form
+                className="hidden sm:flex flex-1 max-w-2xl mx-4"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSearch(searchQuery);
+                }}
+              >
                 <div
-                  key={idx}
-                  className={`group relative cursor-pointer overflow-hidden rounded-xl transition-all duration-200
-                    hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:shadow-md
-                    focus-within:ring-2 focus-within:ring-blue-200 focus-within:ring-opacity-50
-                    ${isUser ? 'px-3 py-2' : 'px-2 py-1.5'}`}
-                  onClick={item.onClick}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
-                      item.onClick();
-                    }
-                  }}
-                  aria-label={isUser ? 'Login to account' : item.label}
-                  title={isUser ? 'Login to your account' : item.label}
+                  className={`relative flex items-center w-full h-11 md:h-12 rounded-xl px-4 bg-white border-2 transition-all duration-300 ${
+                    isSearchFocused
+                      ? 'border-blue-500 shadow-lg ring-2 ring-blue-100'
+                      : 'border-gray-300 hover:border-gray-400 shadow-sm'
+                  }`}
                 >
-                  <div className="flex items-center gap-2.5">
-                    <div className="relative">
-                      <img
-                        src={item.icon}
-                        alt=""
-                        className="w-6 h-6 opacity-80 group-hover:opacity-100 transition-all duration-200"
-                      />
-                      {isUser && (
-                        <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
-                      )}
-                    </div>
-
-                    <div className="flex items-center gap-1.5">
-                      <span
-                        className={`font-medium transition-colors duration-200 ${isUser
-                          ? 'text-gray-800 group-hover:text-blue-700 text-sm hidden sm:block max-w-[120px] truncate'
-                          : 'text-gray-700 group-hover:text-blue-700 text-xs hidden sm:block'
-                          }`}
-                      >
-                        {isUser ? 'Login' : item.label}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Animated Underline */}
-                  <div className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-indigo-500 
-                    group-hover:w-4/5 group-hover:left-[10%] transition-all duration-300 rounded-full"></div>
+                  <svg
+                    className={`w-5 h-5 flex-shrink-0 transition-colors ${
+                      isSearchFocused ? 'text-blue-600' : 'text-gray-400'
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search medicines, health products..."
+                    className="flex-1 px-3 text-sm md:text-base outline-none bg-transparent placeholder-gray-400"
+                    onFocus={() => setIsSearchFocused(true)}
+                    onBlur={() => setIsSearchFocused(false)}
+                  />
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => setSearchQuery('')}
+                      className="flex-shrink-0 p-1.5 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-all"
+                      aria-label="Clear search"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  )}
                 </div>
-              );
-            })}
+              </form>
+
+              {/* Right Nav Items - Desktop */}
+              <div className="hidden md:flex items-center gap-2">
+                {navItems.map((item, idx) => {
+                  const isUser = item.isUser;
+                  const firstName = userName ? userName.split(' ')[0] : '';
+                  const initials = userName ? getInitials(userName) : null;
+                  const avatarStyle = userName ? getAvatarStyle(userName) : '';
+
+                  if (isUser && userName) {
+                    return (
+                      <Dropdown
+                        key={idx}
+                        menu={{
+                          items: getDropdownItems(),
+                          onClick: ({ key }) => {
+                            const clickedItem = getDropdownItems().find(item => item.key === key);
+                            if (clickedItem?.onClick) clickedItem.onClick();
+                          }
+                        }}
+                        placement="bottomRight"
+                        trigger={['click']}
+                      >
+                        <div
+                          className="group cursor-pointer rounded-xl px-3 py-2 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200"
+                          role="button"
+                          tabIndex={0}
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <div className={`inline-flex items-center justify-center rounded-full w-9 h-9 text-sm font-semibold ring-2 ${avatarStyle}`}>
+                              {initials}
+                            </div>
+                            <span className="font-medium text-gray-800 group-hover:text-blue-700 text-sm">
+                              Hi, {firstName}
+                            </span>
+                            <svg className="w-4 h-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
+                            </svg>
+                          </div>
+                        </div>
+                      </Dropdown>
+                    );
+                  }
+
+                  return (
+                    <div
+                      key={idx}
+                      className="group cursor-pointer rounded-xl px-3 py-2 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all"
+                      onClick={item.onClick}
+                    >
+                      <div className="flex items-center gap-2">
+                        <img src={item.icon} alt="" className="w-6 h-6" />
+                        <span className="font-medium text-gray-700 group-hover:text-blue-700 text-sm">
+                          {isUser ? 'Login' : item.label}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Mobile Menu Icons */}
+              <div className="flex md:hidden items-center gap-2">
+                <button
+                  onClick={() => navigate('/cart')}
+                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors relative"
+                >
+                  <img src={cartIcon} alt="Cart" className="w-6 h-6" />
+                </button>
+                <button
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                  aria-label="Toggle menu"
+                >
+                  {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                </button>
+              </div>
+            </div>
+
+            {/* Mobile Search Bar */}
+            <div className="sm:hidden pb-3">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSearch(searchQuery);
+                }}
+              >
+                <div className={`relative flex items-center h-10 rounded-lg px-3 bg-white border-2 transition-all ${
+                  isSearchFocused ? 'border-blue-500 shadow-md ring-2 ring-blue-50' : 'border-gray-300'
+                }`}>
+                  <svg className="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search medicines..."
+                    className="flex-1 px-2 text-sm outline-none bg-transparent"
+                    onFocus={() => setIsSearchFocused(true)}
+                    onBlur={() => setIsSearchFocused(false)}
+                  />
+                  {searchQuery && (
+                    <button type="button" onClick={() => setSearchQuery('')} className="p-1 text-gray-400">
+                      ×
+                    </button>
+                  )}
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Mobile Dropdown Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 top-16 bg-white z-40 overflow-y-auto shadow-lg">
+          <div className="p-4 space-y-3">
+            {userName ? (
+              <>
+                <div className="flex items-center gap-3 p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg">
+                  <div className={`inline-flex items-center justify-center rounded-full w-12 h-12 text-base font-semibold ring-2 ${getAvatarStyle(userName)}`}>
+                    {getInitials(userName)}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-800">Hi, {userName.split(' ')[0]}</p>
+                    <p className="text-xs text-gray-600">Welcome back!</p>
+                  </div>
+                </div>
+                {getDropdownItems().map((item) => (
+                  <button
+                    key={item.key}
+                    onClick={() => {
+                      item.onClick();
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="w-full text-left p-3 rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </>
+            ) : (
+              <button
+                onClick={() => {
+                  navigate('/signin');
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-full flex items-center gap-3 p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+              >
+                <img src={personIcon} alt="" className="w-6 h-6" />
+                <span className="font-medium text-blue-700">Login / Sign Up</span>
+              </button>
+            )}
           </div>
         </div>
       )}
 
       {/* Menubar */}
       <div
-        className={`w-full z-40 transition-all duration-500 ${isScrolled
-          ? 'fixed top-0 bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100'
-          : 'relative bg-white'
-          }`}
+        className={`w-full z-40 transition-all duration-500 ${
+          isScrolled
+            ? 'fixed top-0 bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100'
+            : 'relative bg-white'
+        }`}
       >
         <Menubar />
       </div>

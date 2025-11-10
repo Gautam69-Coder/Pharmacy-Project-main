@@ -126,59 +126,84 @@ const App = () => {
 
   const navigate = useNavigate()
 
-  return (<div>
-    <div style={{ maxWidth: '100vw', boxSizing: 'border-box' }}>
-      <Navbar />
-      <div className="m-[6%]">
-        <Carousel autoplay autoplaySpeed={3000}>
-          <div>
-            <div style={slideImageStyle1}></div>
-          </div>
-          <div>
-            <div style={slideImageStyle2}></div>
-          </div>
-          <div>
-            <div style={slideImageStyle3}></div>
-          </div>
-          <div>
-            <div style={slideImageStyle4}></div>
-          </div>
-        </Carousel>
-      </div>
+  return (
+  <div>
+  <div className="w-full max-w-full overflow-hidden">
+    <Navbar />
+    
+    {/* Carousel - Responsive */}
+    <div className="px-3 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-4 sm:py-6 md:py-8 mt-16 sm:mt-20 md:mt-24">
+      <Carousel 
+        autoplay 
+        autoplaySpeed={3000}
+        className="rounded-lg sm:rounded-xl md:rounded-2xl overflow-hidden"
+      >
+        <div>
+          <div 
+            style={{
+              ...slideImageStyle1,
+              height: '200px',
+              '@media (min-width: 640px)': { height: '300px' },
+              '@media (min-width: 768px)': { height: '400px' },
+              '@media (min-width: 1024px)': { height: '500px' }
+            }}
+            className="h-48 sm:h-64 md:h-80 lg:h-96"
+          ></div>
+        </div>
+        <div>
+          <div style={slideImageStyle2} className="h-48 sm:h-64 md:h-80 lg:h-96"></div>
+        </div>
+        <div>
+          <div style={slideImageStyle3} className="h-48 sm:h-64 md:h-80 lg:h-96"></div>
+        </div>
+        <div>
+          <div style={slideImageStyle4} className="h-48 sm:h-64 md:h-80 lg:h-96"></div>
+        </div>
+      </Carousel>
+    </div>
+  </div>
+
+  {/* Category Section - Responsive */}
+  <div className="w-full px-3 sm:px-6 md:px-8">
+    {/* Category Title */}
+    <div className="flex justify-center mb-6 sm:mb-8 md:mb-10">
+      <h1 className="text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-xl sm:rounded-2xl border-2 sm:border-[3px] border-teal-600 font-bold text-teal-700 shadow-sm hover:shadow-md transition-shadow">
+        Categories
+      </h1>
     </div>
 
-    {/* Category */}
-    <div className='flex justify-center '>
-      <h1 className='text-center text-3xl p-4 rounded-2xl mb-4 border w-[200px] font-bold text-teal-700'>Category</h1>
-    </div>
-    <div className="grid grid-cols-3 gap-4 p-4  max-w-5xl mx-auto mb-20 ">
+    {/* Category Grid - Fully Responsive */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 max-w-6xl mx-auto mb-12 sm:mb-16 md:mb-20 lg:mb-24">
       {categories.map((cat, idx) => (
         <div
           key={cat.label}
-          className={`flex items-center justify-between border-[1.5px] border-[#dfe3e6] rounded-xl p-4 transition-normal  border-gray-200"
-            } bg-white min-h-[80px] hover:shadow-[0px_0px_8px_0px_rgba(0,0,0,0.5)]`}
-
+          className="flex items-center justify-between border-[1.5px] sm:border-2 border-[#dfe3e6] rounded-lg sm:rounded-xl md:rounded-2xl p-3 sm:p-4 md:p-5 transition-all duration-300 bg-white min-h-[70px] sm:min-h-[80px] md:min-h-[90px] hover:shadow-lg hover:scale-[1.02] cursor-pointer"
+          onClick={() => {
+            navigate(`${cat.label.replace(/ /g, '')}`);
+          }}
         >
-          <div className="flex items-center"
-            onClick={() => {
-              navigate(`${cat.label.replace(/ /g,'')}`)
-            }}>
+          <div className="flex items-center flex-1">
             <img
               src={cat.image}
               alt={cat.label}
-              className="w-10 h-12 object-contain mr-4"
+              className="w-8 h-10 sm:w-10 sm:h-12 md:w-12 md:h-14 object-contain mr-3 sm:mr-4 flex-shrink-0"
             />
-            <span className="font-medium">{cat.label}</span>
+            <span className="font-medium text-sm sm:text-base md:text-lg text-gray-800">
+              {cat.label}
+            </span>
           </div>
           {cat.offer && (
-            <span className="text-green-600 text-sm font-semibold ml-2 w-[70px]">
+            <span className="text-green-600 text-xs sm:text-sm md:text-base font-semibold ml-2 whitespace-nowrap">
               {cat.offer}
             </span>
           )}
         </div>
       ))}
     </div>
-  </div>);
+  </div>
+</div>
+
+  );
 };
 
 export default App;
