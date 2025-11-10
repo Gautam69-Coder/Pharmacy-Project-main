@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Landing from './Pages/Landing'
-import SignIn from './Pages/Signin'
+import SignIn from './Pages/signin'
 import SignUp from './Pages/Signup'
 import Home from './Pages/Home'
 import Category from './Pages/Menu_Pages/Category'
