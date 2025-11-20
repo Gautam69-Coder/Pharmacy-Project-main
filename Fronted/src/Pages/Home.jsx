@@ -114,7 +114,7 @@ const ImageCarousel = () => {
               </div>
             ) : (
               <img
-                src={img.src}
+                src={img.src ||"https://images.pexels.com/photos/3902881/pexels-photo-3902881.jpeg"}
                 alt={img.alt}
                 className="w-full object-cover h-48 sm:h-64 md:h-80 lg:h-96"
                 onLoad={handleImageLoad}
