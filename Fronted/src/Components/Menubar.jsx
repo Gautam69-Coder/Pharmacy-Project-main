@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DownSvg from '/src/assets/icons/down.svg';
+import DownSvg from '../assets/icons/down.svg';
 
 const Menubar = () => {
   const navigate = useNavigate();
