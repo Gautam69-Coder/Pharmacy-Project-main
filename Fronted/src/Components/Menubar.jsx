@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import DownSvg from '/src/assets/icons/down.svg';
 
 const Menubar = () => {
   const navigate = useNavigate();
@@ -149,7 +150,7 @@ const Menubar = () => {
               Categories
               <img
                 className="w-5 h-5"
-                src="/src/assets/icons/down.svg"
+                src={DownSvg}
                 alt="Dropdown Arrow"
               />
             </div>
